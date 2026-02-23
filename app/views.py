@@ -1,5 +1,11 @@
+import datetime
 from app import app
 from flask import render_template, request, redirect, url_for, flash
+
+
+def format_date_joined(date):
+    """Given a date, return it formatted as Month, Year (e.g. Feb, 2021)."""
+    return date.strftime("%b, %Y")
 
 
 ###
@@ -15,8 +21,24 @@ def home():
 @app.route('/about/')
 def about():
     """Render the website's about page."""
-    return render_template('about.html', name="Mary Jane")
+    return render_template('about.html', name="Christoff Cowan")
 
+
+@app.route('/profile')
+def profile():
+    date_joined = datetime.date(2019, 2, 7)  
+    date_formatted = format_date_joined(date_joined)
+    return render_template(
+        'profile.html',
+        full_name="Christoff Cowan",
+        username="ccowan",
+        location="Kingston, Jamaica",
+        date_joined=date_formatted,
+        bio="Software developer with a passion for creating innovative solutions. Experienced in Python, JavaScript, and web development. Looking forward to connecting with like-minded professionals and contributing to exciting projects.",
+        posts_count=7,
+        following_count=100,
+        followers_count=250,
+    )
 
 ###
 # The functions below should be applicable to all Flask apps.
